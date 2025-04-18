@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.ufu.facom.gbc074.kvs";
+
+package kvs;
+
+// Retorno de consultas
+message Tupla{
+  // a chave passada na consulta
+  string chave = 1;
+  // valor encontrado
+  string valor = 2;
+  // versao do valor para a chave
+  int32 versao = 3;
+}
+
+// Parametro de entrada para insercoes
+message ChaveValor{
+  // a chave
+  string chave = 1;
+  // o valor
+  string valor = 2;
+}
+
+// Parametro de entrada para consultas
+message ChaveVersao{
+  // a chave pesquisada
+  string chave = 1;
+  // a versao pesquisada (opcional)
+  optional int32 versao = 2;
+}
+
+// Versao para snapshot
+message Versao{
+  // a versao pesquisada
+  int32 versao = 1;
+}
+
+service KVS {
+  rpc Insere(ChaveValor) returns (Versao) {}
+  rpc Consulta(ChaveVersao) returns (Tupla) {}
+  rpc Remove(ChaveVersao) returns (Versao) {}
+  rpc InsereVarias(stream ChaveValor) returns (stream Versao) {}
+  rpc ConsultaVarias(stream ChaveVersao) returns (stream Tupla) {}
+  rpc RemoveVarias(stream ChaveVersao) returns (stream Versao) {}
+  rpc Snapshot(Versao) returns (stream Tupla) {}
+}
