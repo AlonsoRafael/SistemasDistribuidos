@@ -1,3 +1,4 @@
 #!/bin/bash
 
-python cliente.py 
+python cliente.py  #porta 50051
+
