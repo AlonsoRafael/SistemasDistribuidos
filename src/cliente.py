@@ -7,9 +7,9 @@ import kvs_pb2_grpc
 def insere(stub, chave, valor):
     response = stub.Insere(kvs_pb2.ChaveValor(chave=chave, valor=valor))
     if response.versao > 0:
-        print(f"✅ Inserido com versão {response.versao}")
+        print(f" Inserido com versão {response.versao}")
     else:
-        print("❌ Falha na inserção")
+        print(" Falha na inserção")
 
 def consulta(stub, chave, versao=None):
     if versao:
@@ -18,9 +18,9 @@ def consulta(stub, chave, versao=None):
         request = kvs_pb2.ChaveVersao(chave=chave)
     response = stub.Consulta(request)
     if response.valor:
-        print(f"✅ Resultado: chave={response.chave}, valor={response.valor}, versao={response.versao}")
+        print(f" Resultado: chave={response.chave}, valor={response.valor}, versao={response.versao}")
     else:
-        print("❌ Chave ou versão não encontrada")
+        print(" Chave ou versão não encontrada")
 
 def remove(stub, chave, versao=None):
     if versao:
@@ -29,15 +29,15 @@ def remove(stub, chave, versao=None):
         request = kvs_pb2.ChaveVersao(chave=chave)
     response = stub.Remove(request)
     if response.versao > 0:
-        print(f"✅ Removido com versão {response.versao}")
+        print(f" Removido com versão {response.versao}")
     else:
-        print("❌ Falha na remoção")
+        print(" Falha na remoção")
 
 def snapshot(stub, versao):
     versao = int(versao)
     request = kvs_pb2.Versao(versao=versao)
     responses = stub.Snapshot(request)
-    print(f"📸 Snapshot versão {versao}")
+    print(f" Snapshot versão {versao}")
     for r in responses:
         if r.chave:
             print(f" - {r.chave}: {r.valor} (v{r.versao})")
@@ -70,7 +70,7 @@ def main():
                 elif comando[0] == "snapshot" and len(comando) == 2:
                     snapshot(stub, comando[1])
                 else:
-                    print("❗ Comando inválido.")
+                    print(" Comando inválido.")
             except KeyboardInterrupt:
                 print("\nEncerrando...")
                 break
