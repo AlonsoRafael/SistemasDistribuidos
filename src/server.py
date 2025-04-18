@@ -59,11 +59,12 @@ class KVSServicer(kvs_pb2_grpc.KVSServicer):
         return kvs_pb2.Versao(versao=-1)
 
     # Implementar os demais métodos conforme especificações...
+    ''''''
 def serve():
     print("Iniciando servidor...")
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     kvs_pb2_grpc.add_KVSServicer_to_server(KVSServicer(), server)
-    server.add_insecure_port('[::]:9000')
+    server.add_insecure_port('[::]:50051')
     server.start()
     print("servidor iniciado")
     server.wait_for_termination()

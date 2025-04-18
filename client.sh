@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cargo run -- $@
+python cliente.py 127.0.0.1 50051
