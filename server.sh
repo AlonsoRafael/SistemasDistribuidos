@@ -1,2 +1,2 @@
 #!/bin/bash
-python server.py 50051
+python server.py

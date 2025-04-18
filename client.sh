@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python cliente.py 127.0.0.1 50051
+python cliente.py 

@@ -1,79 +1,101 @@
 import grpc
 import sys
-
 import kvs_pb2
 import kvs_pb2_grpc
 
-def insere(stub, chave, valor):
-    response = stub.Insere(kvs_pb2.ChaveValor(chave=chave, valor=valor))
-    if response.versao > 0:
-        print(f" Inserido com versão {response.versao}")
-    else:
-        print(" Falha na inserção")
+def run_client(porta):
+    canal = grpc.insecure_channel(f'localhost:{porta}')
+    stub = kvs_pb2_grpc.KVSStub(canal)
 
-def consulta(stub, chave, versao=None):
-    if versao:
-        request = kvs_pb2.ChaveVersao(chave=chave, versao=int(versao))
-    else:
-        request = kvs_pb2.ChaveVersao(chave=chave)
-    response = stub.Consulta(request)
-    if response.valor:
-        print(f" Resultado: chave={response.chave}, valor={response.valor}, versao={response.versao}")
-    else:
-        print(" Chave ou versão não encontrada")
+    print("Cliente iniciado. Comandos disponíveis:")
+    print("insere <chave> <valor>")
+    print("consulta <chave> [versao]")
+    print("remove <chave> [versao]")
+    print("snapshot <versao>")
+    print("insere_varias <chave1> <valor1> <chave2> <valor2> ...")
+    print("consulta_varias <chave1> [versao1] <chave2> [versao2] ...")
+    print("remove_varias <chave1> [versao1] <chave2> [versao2] ...")
+    print("fim")
 
-def remove(stub, chave, versao=None):
-    if versao:
-        request = kvs_pb2.ChaveVersao(chave=chave, versao=int(versao))
-    else:
-        request = kvs_pb2.ChaveVersao(chave=chave)
-    response = stub.Remove(request)
-    if response.versao > 0:
-        print(f" Removido com versão {response.versao}")
-    else:
-        print(" Falha na remoção")
+    while True:
+        try:
+            entrada = input("> ").strip()
+            if not entrada:
+                continue
 
-def snapshot(stub, versao):
-    versao = int(versao)
-    request = kvs_pb2.Versao(versao=versao)
-    responses = stub.Snapshot(request)
-    print(f" Snapshot versão {versao}")
-    for r in responses:
-        if r.chave:
-            print(f" - {r.chave}: {r.valor} (v{r.versao})")
+            comando, *args = entrada.split()
 
-def main():
-    if len(sys.argv) != 3:
-        print("Uso: python client.py <host> <porta>")
-        sys.exit(1)
-
-    host = sys.argv[1]
-    porta = sys.argv[2]
-
-    with grpc.insecure_channel(f"{host}:{porta}") as channel:
-        stub = kvs_pb2_grpc.KVSStub(channel)
-        print("🔌 Conectado ao servidor. Digite um comando (ou 'sair'):")
-
-        while True:
-            try:
-                comando = input("> ").strip().split()
-                if not comando:
-                    continue
-                if comando[0] == "sair":
-                    break
-                elif comando[0] == "insere" and len(comando) == 3:
-                    insere(stub, comando[1], comando[2])
-                elif comando[0] == "consulta":
-                    consulta(stub, comando[1], comando[2] if len(comando) > 2 else None)
-                elif comando[0] == "remove":
-                    remove(stub, comando[1], comando[2] if len(comando) > 2 else None)
-                elif comando[0] == "snapshot" and len(comando) == 2:
-                    snapshot(stub, comando[1])
-                else:
-                    print(" Comando inválido.")
-            except KeyboardInterrupt:
-                print("\nEncerrando...")
+            if comando == "fim":
                 break
 
+            elif comando == "insere" and len(args) == 2:
+                resposta = stub.Insere(kvs_pb2.ChaveValor(chave=args[0], valor=args[1]))
+                print("Versão inserida:", resposta.versao)
+
+            elif comando == "consulta" and len(args) >= 1:
+                chave = args[0]
+                versao = int(args[1]) if len(args) > 1 else 0
+                resposta = stub.Consulta(kvs_pb2.ChaveVersao(chave=chave, versao=versao))
+                print(f"{resposta.chave} = {resposta.valor} (v{resposta.versao})")
+
+            elif comando == "remove" and len(args) >= 1:
+                chave = args[0]
+                versao = int(args[1]) if len(args) > 1 else 0
+                resposta = stub.Remove(kvs_pb2.ChaveVersao(chave=chave, versao=versao))
+                print("Versão removida:", resposta.versao)
+
+            elif comando == "snapshot" and len(args) == 1:
+                versao = int(args[0])
+                respostas = stub.Snapshot(kvs_pb2.Versao(versao=versao))
+                for r in respostas:
+                    print(f"{r.chave} = {r.valor} (v{r.versao})")
+
+            elif comando == "insere_varias" and len(args) % 2 == 0:
+                def gerar():
+                    for i in range(0, len(args), 2):
+                        yield kvs_pb2.ChaveValor(chave=args[i], valor=args[i+1])
+                respostas = stub.InsereVarias(gerar())
+                for r in respostas:
+                    print("Versão inserida:", r.versao)
+
+            elif comando == "consulta_varias" and len(args) >= 1:
+                def gerar():
+                    i = 0
+                    while i < len(args):
+                        chave = args[i]
+                        i += 1
+                        versao = int(args[i]) if i < len(args) and args[i].isdigit() else 0
+                        if i < len(args) and args[i].isdigit():
+                            i += 1
+                        yield kvs_pb2.ChaveVersao(chave=chave, versao=versao)
+                respostas = stub.ConsultaVarias(gerar())
+                for r in respostas:
+                    print(f"{r.chave} = {r.valor} (v{r.versao})")
+
+            elif comando == "remove_varias" and len(args) >= 1:
+                def gerar():
+                    i = 0
+                    while i < len(args):
+                        chave = args[i]
+                        i += 1
+                        versao = int(args[i]) if i < len(args) and args[i].isdigit() else 0
+                        if i < len(args) and args[i].isdigit():
+                            i += 1
+                        yield kvs_pb2.ChaveVersao(chave=chave, versao=versao)
+                respostas = stub.RemoveVarias(gerar())
+                for r in respostas:
+                    print("Versão removida:", r.versao)
+
+            else:
+                print("Comando inválido ou parâmetros incorretos.")
+
+        except grpc.RpcError as e:
+            print("Erro na comunicação com o servidor:", e)
+        except Exception as e:
+            print("Erro:", e)
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print("Uso: python cliente.py <porta>")
+        sys.exit(1)
+    run_client(sys.argv[1])
