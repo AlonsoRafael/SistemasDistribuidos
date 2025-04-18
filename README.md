@@ -36,11 +36,15 @@ self.last_versions = {
     "chave1": 2,
     "chave2": 1
 }
+```
 
-##Instalação
+---
+
+## Instalação
+
 1. Instalar o broker Mosquitto (Linux)
-sudo apt update
-sudo apt install mosquitto mosquitto-clients
+   sudo apt update
+   sudo apt install mosquitto mosquitto-clients
 
 2. Instalar dependências Python
 
@@ -55,20 +59,28 @@ O script instala:
 
 -paho-mqtt
 
-##Compilação do .proto
+---
+
+## Compilação do .proto
+
 python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. kvs.proto
 
-##Execução servidor
+---
+
+## Execução servidor
+
 chmod +x server.sh
 ./server.sh 50051
- ou
+ou
 entra na pasta src
 python server.py 50051
 
-##Execução cliente
+---
+
+## Execução cliente
+
 chmod +x client.sh
 ./client.sh 50051
 ou
 entrar na pasta src
 python cliente.py 50051
-```
