@@ -1,4 +1,7 @@
 #!/bin/bash
 
-python cliente.py  #porta 50051
-
+if [ -z "$1" ]; then
+  echo "Uso: ./cliente.sh <porta>"
+  exit 1
+fi
+python3 cliente.py localhost $1
