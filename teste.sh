@@ -1,4 +1,5 @@
 #!/bin/bash
+
 source venv/bin/activate
 ./teste1-insere.sh
 sleep 2

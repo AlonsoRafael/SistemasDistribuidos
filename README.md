@@ -1,11 +1,12 @@
-# Sistema Distribuído de Armazenamento Chave-Valor (KVS) 
+# Sistema Distribuído de Armazenamento Chave-Valor (KVS)
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Rust](https://img.shields.io/badge/Rust-1.70%2B-orange)
 ![gRPC](https://img.shields.io/badge/gRPC-1.60%2B-lightgrey)
 ![MQTT](https://img.shields.io/badge/MQTT-5.0-green)
 
-## 📚 Índice
+## Índice
+
 - [Pré-requisitos](#-pré-requisitos)
 - [Compilação](#-instruções-de-compilação)
 - [Uso](#-uso-do-servidor)
@@ -14,18 +15,17 @@
 - [Limitações](#-limitações)
 - [Dificuldades](#-dificuldades-encontradas)
 
-## 🎓 Trabalho de Sistemas Distribuídos  
-**Dupla:** 
-    - Gabriel Luiz de Lima Soares
-    - Rafael Alonso Marques
+## Trabalho de Sistemas Distribuídos
+
+**Dupla:** - Gabriel Luiz de Lima Soares - Rafael Alonso Marques
 **Curso:** Ciência da Computação  
 **Ano:** 2025
 
 ---
 
-## 🎩 Vídeo de Apresentação (3:42 min)
+## Vídeo de Apresentação (3:42 min)
 
-👉 [Demonstração do Sistema KVS](https://youtu.be/nP5gAX4Nfb4)
+[Demonstração do Sistema KVS](https://youtu.be/nP5gAX4Nfb4)
 
 <a href="https://youtu.be/nP5gAX4Nfb4" target="_blank">
   <img src="https://img.youtube.com/vi/nP5gAX4Nfb4/0.jpg" alt="Vídeo de Demonstração" width="400">
@@ -33,7 +33,7 @@
 
 ---
 
-## 📦 Descrição do Projeto
+## Descrição do Projeto
 
 Este projeto implementa um sistema de **armazenamento chave-valor distribuído** com arquitetura **híbrida**, combinando:
 
@@ -42,17 +42,17 @@ Este projeto implementa um sistema de **armazenamento chave-valor distribuído**
 
 O sistema suporta **múltiplas versões por chave**, **tabelas hash em memória**, e possui scripts auxiliares para **compilação e execução automatizadas**.
 
-   Cliente Rust
-       │
-       ▼ (gRPC)
-   Servidor Python ────(MQTT)───┤
-       ▲                      Broker Mosquitto
-       │                         │
-       └─────────────────────────┘
+Cliente Rust
+│
+▼ (gRPC)
+Servidor Python ────(MQTT)───┤
+▲ Broker Mosquitto
+│ │
+└─────────────────────────┘
 
 ---
 
-## ⚙️ Estrutura do Repositório
+## Estrutura do Repositório
 
 ```
 .
@@ -71,7 +71,7 @@ O sistema suporta **múltiplas versões por chave**, **tabelas hash em memória*
 
 ---
 
-## 🔧 Instruções de Compilação
+## Instruções de Compilação
 
 No terminal (Linux ou WSL):
 
@@ -91,7 +91,7 @@ Esse script:
 
 ---
 
-## 🐍 Detalhes de Instalação e Configuração (Python)
+## Detalhes de Instalação e Configuração (Python)
 
 O servidor é implementado em **Python 3.10+** e requer:
 
@@ -103,7 +103,7 @@ Todos são instalados automaticamente via `compile.sh`.
 
 ---
 
-## ⚙️ Uso do Servidor
+## Uso do Servidor
 
 Para executar o servidor em uma porta específica:
 
@@ -121,7 +121,7 @@ O servidor inicia o gRPC e se conecta ao broker Mosquitto local.
 
 ---
 
-## 📡 Uso do Cliente (Rust)
+## Uso do Cliente (Rust)
 
 Para executar ações com o cliente, execute o comando no terminal bash:
 
@@ -135,7 +135,6 @@ Exemplos:
 ./client.sh --port 9000 -o insere -k chave1 -v valor1
 ```
 
-
 Também pode ser usado os scripts de teste para verificar o funcionamento da implementação, executando (por exemplo):
 
 ```bash
@@ -145,7 +144,7 @@ chmod +x teste1-insere.sh
 
 ---
 
-## 🗃️ Organização dos Dados
+## Organização dos Dados
 
 - Cada servidor mantém uma **tabela hash em memória** com estrutura:
 
@@ -159,7 +158,7 @@ Ou seja, cada chave (`str`) possui um dicionário de versões (`int`) com valore
 
 ---
 
-## 🧪 Como Testar
+## Como Testar
 
 Após compilar:
 
@@ -191,7 +190,7 @@ Esse script faz operações automáticas via cliente Rust.
 
 ---
 
-## ⚠️ Dificuldades Encontradas
+## Dificuldades Encontradas
 
 - Integração entre gRPC (Python) e cliente Rust exigiu cuidados com tipos e serialização.
 - Configuração do MQTT para múltiplas instâncias em paralelo sem conflitos.
@@ -199,7 +198,7 @@ Esse script faz operações automáticas via cliente Rust.
 
 ---
 
-## ❌ Requisitos Não Implementados
+## Requisitos Não Implementados
 
 - Persistência em disco dos dados (o armazenamento é apenas em memória).
 - Tolerância a falhas de servidor (ex: reconexão automática após falha).
@@ -209,7 +208,7 @@ Esse script faz operações automáticas via cliente Rust.
 
 ---
 
-## ✅ Requisitos Implementados
+## Requisitos Implementados
 
 - [x] Cliente e Servidor com gRPC
 - [x] Múltiplas versões por chave
@@ -217,4 +216,3 @@ Esse script faz operações automáticas via cliente Rust.
 - [x] Sincronização entre servidores com MQTT
 - [x] Scripts automatizados (`compile.sh`, `server.sh`, `teste.sh`)
 - [x] Testes via cliente Rust em múltiplos servidores
-
