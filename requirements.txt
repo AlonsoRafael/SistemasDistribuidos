@@ -1,0 +1,10 @@
+# Dependências principais
+grpcio==1.60.0
+grpcio-tools==1.60.0
+paho-mqtt==2.0.0
+protobuf==4.25.2
+
+# Dependências secundárias
+six==1.16.0
+setuptools==69.0.3
+typing-extensions==4.9.0

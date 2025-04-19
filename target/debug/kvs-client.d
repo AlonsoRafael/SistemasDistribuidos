@@ -1,0 +1,1 @@
+/home/gabriel_linux/SistemasDistribuidos/target/debug/kvs-client: /home/gabriel_linux/SistemasDistribuidos/build.rs /home/gabriel_linux/SistemasDistribuidos/proto /home/gabriel_linux/SistemasDistribuidos/proto/kvs.proto /home/gabriel_linux/SistemasDistribuidos/src/main.rs /home/gabriel_linux/SistemasDistribuidos/target/debug/build/kvs-client-db0011016b779307/out/kvs.rs

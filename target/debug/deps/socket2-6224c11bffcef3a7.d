@@ -1,0 +1,11 @@
+/home/gabriel_linux/SistemasDistribuidos/target/debug/deps/libsocket2-6224c11bffcef3a7.rmeta: /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/lib.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockaddr.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/socket.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockref.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sys/unix.rs
+
+/home/gabriel_linux/SistemasDistribuidos/target/debug/deps/libsocket2-6224c11bffcef3a7.rlib: /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/lib.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockaddr.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/socket.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockref.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sys/unix.rs
+
+/home/gabriel_linux/SistemasDistribuidos/target/debug/deps/socket2-6224c11bffcef3a7.d: /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/lib.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockaddr.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/socket.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockref.rs /home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sys/unix.rs
+
+/home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/lib.rs:
+/home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockaddr.rs:
+/home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/socket.rs:
+/home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sockref.rs:
+/home/gabriel_linux/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/socket2-0.5.7/src/sys/unix.rs:

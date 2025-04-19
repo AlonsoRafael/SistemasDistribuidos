@@ -1,0 +1,2 @@
+cargo:rerun-if-changed=proto/kvs.proto
+cargo:rerun-if-changed=proto
